@@ -1,0 +1,38 @@
+[package]
+name = "client"
+version = "0.1.0"
+edition = "2024"
+
+# 二进制文件名保留 `cola-im-desktop-client`（历史名字，别改）：
+# - `cargo run --bin cola-im-desktop-client`、IDE 里的运行配置、外部脚本都能继续用；
+# - 产物还是 `target/{debug,release}/cola-im-desktop-client.exe`。
+# 包名（也就是 `-p` 后面的参数）才是 `client`，所以 `cargo run -p client` 一样能跑，
+# 工作区里只有这一个 bin，`cargo run` 不带参数也能跑。
+[[bin]]
+name = "cola-im-desktop-client"
+path = "src/main.rs"
+
+[dependencies]
+gpui-kit = "0.7.3"
+tracing = "0.1.44"
+# Remote avatars are drawn with `img("https://…")`, which GPUI resolves through
+# its asset system. GPUI's default HTTP client is a null one — every request
+# fails with "No HttpClient available" — so a real client is installed in
+# `main()`; see `client/src/net.rs`.
+#
+# `gpui-pre-reqwest` is the reqwest fork the rest of the GPUI ecosystem uses.
+# `native-tls` keeps the Windows build free of any C toolchain: it links against
+# SChannel instead of rustls/aws-lc.
+reqwest = { package = "gpui-pre-reqwest", version = "0.12.15", default-features = false, features = ["native-tls"] }
+# Used by `client/src/net.rs` to drive the (async) reqwest client on a worker thread.
+tokio = { version = "1", features = ["rt", "net", "time"] }
+# `oneshot` channel bridging the worker thread back to the render loop.
+futures = "0.3"
+# Mock data under `client/src/data/im/*.json`.
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# 消息附件（照片 / 视频）在气泡里的缩略图尺寸：只读文件头拿像素宽高，
+# 不解码整张图。功能集与 `gpui-pre` 对 `image` 的要求取并集，
+# 所以这里 `default-features = false` 不会再引入任何新 crate。
+image = { version = "0.25", default-features = false }
+log = "0.4.34"

@@ -1,0 +1,148 @@
+[
+    {
+        "group": "A",
+        "contacts": [
+            {
+                "id": 1,
+                "name": "Alice",
+                "initial": "A",
+                "phone": "13800138001",
+                "avatar": "https://cdn1.damawei.com/android_1000000206_20250716_082707_7338796.jpg?imageView2/1/w/100/h/100",
+                "signature": "Hello!"
+            }
+        ]
+    },
+    {
+        "group": "B",
+        "contacts": [
+            {
+                "id": 2,
+                "name": "Bob",
+                "initial": "B",
+                "phone": "13800138002",
+                "avatar": "https://cdn1.damawei.com/android_1000000193_20250716_085431_4651409.jpg?imageView2/2/w/100/h/100",
+                "signature": "How are you?"
+            }
+        ]
+    },
+    {
+        "group": "C",
+        "contacts": [
+            {
+                "id": 3,
+                "name": "Charlie",
+                "initial": "C",
+                "phone": "13800138003",
+                "avatar": "https://cdn1.damawei.com/android_10008010_20230817_222913_028777.jpg?imageView2/1/w/100/h/100",
+                "signature": "See you later!"
+            }
+        ]
+    },
+    {
+        "group": "B",
+        "contacts": [
+            {
+                "id": 12,
+                "name": "不爱你了",
+                "initial": "B",
+                "phone": "13800138012",
+                "avatar": "https://cdn1.damawei.com/android_1000010404_20250429_194535_8961989.jpg?imageView2/1/w/60/h/60",
+                "signature": "你是猪吗？"
+            }
+        ]
+    },
+    {
+        "group": "G",
+        "contacts": [
+            {
+                "id": 11,
+                "name": "闺蜜",
+                "initial": "G",
+                "phone": "13800138011",
+                "avatar": "https://cdn1.damawei.com/1000015890_IOS_20250818150118_cerFace.png?imageView2/2/w/100/h/100",
+                "signature": "我有喜欢的人了!"
+            }
+        ]
+    },
+    {
+        "group": "H",
+        "contacts": [
+            {
+                "id": 6,
+                "name": "哈基米",
+                "initial": "H",
+                "phone": "13800138006",
+                "avatar": "https://cdn1.damawei.com/android_10011147_20231207_232042_1622180.jpg?imageView2/2/w/100/h/100",
+                "signature": "你是猪吗？"
+            }
+        ]
+    },
+    {
+        "group": "K",
+        "contacts": [
+            {
+                "id": 4,
+                "name": "可乐鸡翅",
+                "initial": "K",
+                "phone": "13800138004",
+                "avatar": "https://cdn1.damawei.com/android_1000000089_20250611_234345_2795864.jpg?imageView2/1/w/100/h/100",
+                "signature": "好吃哈哈!"
+            }
+        ]
+    },
+    {
+        "group": "L",
+        "contacts": [
+            {
+                "id": 8,
+                "name": "李佳慧",
+                "initial": "L",
+                "phone": "13800138008",
+                "avatar": "https://cdn1.damawei.com/android_1000001108_20250716_075556_6921873.jpg?imageView2/1/w/100/h/100",
+                "signature": "你今天在学校看到谁了?"
+            }
+        ]
+    },
+    {
+        "group": "M",
+        "contacts": [
+            {
+                "id": 5,
+                "name": "momo15114",
+                "initial": "M",
+                "phone": "13800138005",
+                "avatar": "https://cdn1.damawei.com/android_1000000111_20250520_050823_5437957.jpg?imageView2/1/w/100/h/100",
+                "signature": "01!"
+            },
+            {
+                "id": 9,
+                "name": "麻麻",
+                "initial": "M",
+                "phone": "13800138009",
+                "avatar": "https://cdn1.damawei.com/user/20221227/f2ca5653a74abf1a8b82308213142dac.png?imageView2/2/w/100/h/100",
+                "signature": "母亲大人，爆点金币!"
+            }
+        ]
+    },
+    {
+        "group": "W",
+        "contacts": [
+            {
+                "id": 7,
+                "name": "雯雯",
+                "initial": "W",
+                "phone": "13800138007",
+                "avatar": "https://cdn1.damawei.com/android_1000000206_20250716_082707_7338796.jpg?imageView2/1/w/100/h/100",
+                "signature": "Hello!"
+            },
+            {
+                "id": 10,
+                "name": "外卖小哥",
+                "initial": "W",
+                "phone": "13800138010",
+                "avatar": "https://cdn1.damawei.com/1000015177_IOS_20250712172229_cerFace.png?imageView2/2/w/100/h/100",
+                "signature": "马上到啦~，等一下!"
+            }
+        ]
+    }
+]
