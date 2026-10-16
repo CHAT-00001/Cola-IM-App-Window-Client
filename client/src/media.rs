@@ -2,7 +2,7 @@
 //!
 //! 缩略图规则（与微信一致）：
 //!
-//! - 边界固定 **400x400**（[`THUMB_MAX`]）；
+//! - 边界固定 **120x120**（[`THUMB_MAX`]）；
 //! - **不裁切**（渲染时用 `ObjectFit::Contain`），等比缩放；
 //! - 只缩小不放大，最长边贴到 400 就停，另一边按比例跟着缩；
 //! - 图片尺寸读不出来时按 400x400 的方块兜底，保证气泡不会忽大忽小。
@@ -12,7 +12,7 @@ use std::path::{Path, PathBuf};
 use crate::upload::UploadState;
 
 /// 缩略图边界：宽、高都不超过它。
-pub const THUMB_MAX: f32 = 400.;
+pub const THUMB_MAX: f32 = 120.0;
 
 /// 附件类型。
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]

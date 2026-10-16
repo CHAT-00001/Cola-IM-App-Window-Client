@@ -1,24 +1,20 @@
 # 可乐 · 桌面版 —— Cargo 工作区（virtual manifest）
-#
-# 二进制包只有一个：`client`（`client/Cargo.toml` + `client/src/**`）。
-# 根目录这里不再放包本身，只负责把成员和构建配置收在一起：
-#
-#   cargo run -p client                      # 开发运行（从仓库根目录）
-#   cargo run --release -p client            # 推荐：release 帧率更好，见 DEVELOPMENT.md 第 2 节
-#   cargo test -p client                     # 单元测试
-#   cargo build --release -p client          # 只编译，产物 target/release/cola-im-desktop-client.exe
-#
-# 工作区根目录还负责两件事：
-#   - `Cargo.lock` / `target/` 共享（整棵树只有一份）；
-#   - 运行期配置 `.env` 留在仓库根目录，`client/src/config.rs` 会按
-#     当前目录 → 可执行文件目录 → `client/` → 仓库根目录 的顺序查找。
+# 2026-10-15 05:20
 
+## 工作区
 [workspace]
 members = [
     "client", # 客户端 bin
-    "crates/cola_auth", # 验证
-    "crates/cola_video" # 短视频
+    "crates/cola_auth",  # 验证
+    "crates/cola_data",  # 数据中心
+    "crates/cola_infra", # 基础设施 (💡 - 可独立打包成静态库给Android / iOS 使用)
+    "crates/cola_video", # 短视频
 ]
+
+## 二进制
+default-members = ["client"]
+
+## 依赖解析器
 resolver = "3"
 
 #  BUILD

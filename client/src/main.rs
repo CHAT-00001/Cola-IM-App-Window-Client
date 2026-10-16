@@ -64,10 +64,10 @@ const TINT_CHAT: u32 = 0xd8c2a8;
 const TINT_ME: u32 = 0xc6a68b;
 const TINT_CARD: u32 = 0xdabf9f;
 
-/// 名片弹窗尺寸：卡片 500x600；「关闭」长条 400x45，放在「发消息」按钮正下方。
-const CARD_W: f32 = 500.;
+/// 名片弹窗尺寸：卡片 400x600；「关闭」长条 360x45，放在「发消息」按钮正下方。
+const CARD_W: f32 = 400.;
 const CARD_H: f32 = 600.;
-const CARD_CLOSE_W: f32 = 400.;
+const CARD_CLOSE_W: f32 = 360.;
 const CARD_CLOSE_H: f32 = 45.;
 //////// 时间常量：所有「多久」都集中在这里，方便后期统一调整
 
@@ -1677,7 +1677,7 @@ fn main() {
         let options = WindowOptions {
             window_bounds: Some(WindowBounds::centered(size(px(800.), px(600.)), cx)),
             titlebar: Some(TitlebarOptions {
-                title: Some("可乐 · 桌面版".into()),
+                title: Some("可乐IM · 桌面版".into()),
                 appears_transparent: false,
                 traffic_light_position: None,
             }),
@@ -1686,13 +1686,13 @@ fn main() {
 
         //
 
-        info!("Cola IM 客户端启动");
+        info!("[🗣️ MAIN] - ✅️ Cola IM 客户端启动");
 
         //
         gpui_kit::open_window(options, cx, |window, cx| {
             cx.new(|cx| Messenger::new(window, cx))
         })
-        .expect("Failed to open Cola IM window");
+        .expect("[🗣️ MAIN] - ✅️  - ❌️ Failed to open Cola IM window");
     });
 }
 

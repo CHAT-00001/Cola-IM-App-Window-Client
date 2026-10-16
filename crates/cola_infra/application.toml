@@ -1,0 +1,73 @@
+#### COLA IM CLIENT SDK - 可乐IM客户端SDK
+#### 2026-10-08 23:00 Created.
+
+
+# APP
+[app]
+name = "Cola IM Client SDK"
+name_zh = "可乐 IM 客户端 SDK"
+name_jr = ""
+name_kr = ""
+version = "0.1.0"
+
+# Server
+[Server]
+host = "0.0.0.0"
+port = 20047
+
+# GATEWAY
+
+# Global-Gateway 开发
+[Global-Gateway.1]
+host = "127.0.0.1"
+port = 8080
+
+# Global-Gateway 生产
+[Global-Gateway.2]
+host = "https://ap-2.cola.im"
+port = 443
+
+# Global-Gateway 生产2
+[Global-Gateway.3]
+host = "https://ap-3.damawei.com"
+port = 443
+
+# Global-Gateway 生产3
+[Global-Gateway.4]
+host = "https://ap-4.damawei.com"
+port = 443
+
+# ENDPOINTS
+
+# Client Endpoint 默认接入点1
+[Endpoint.1]
+host = "localhost"
+port = 8181
+protocol = "http"
+cert = "certs/endpoint1.crt"
+sni = "endpoint1.local"
+
+# Client Endpoint 默认接入点2
+[Endpoint.2]
+host = "127.0.0.1"
+port = 19967
+protocol = "ws"
+cert = "certs/endpoint2.crt"
+sni = "endpoint2.local"
+
+# Client Endpoint 默认接入点3
+[Endpoint.3]
+host = "https://ws-gz-001.damawei.com"
+port = 8181
+protocol = "ws"
+cert = "certs/endpoint2.crt"
+sni = "endpoint2.local"
+
+
+# Client Endpoint 默认接入点4
+[Endpoint.4]
+host = "https://wt-gz-001.damawei.com"
+port = 8181
+protocol = "wt"
+cert = "certs/endpoint4.crt"
+sni = "endpoint4.local"

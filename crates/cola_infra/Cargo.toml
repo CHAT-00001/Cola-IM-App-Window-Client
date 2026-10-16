@@ -1,0 +1,29 @@
+# cola-client-core/Cargo.toml -- Cola IM client core SDK manifest
+# 2026-04-05 10:20
+
+[package]
+name = "cola_infra"
+version = "0.1.0"
+edition = "2024"
+description = "Cola IM client core SDK"
+readme = "README.md"
+
+[features]
+default = []
+legacy-video = []
+
+#### >>>>>>>>
+[dependencies]
+## 本地依赖
+cola_data = { path = "../cola_data" } # 数据中心
+
+## 外部依赖
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1"
+ureq = { version = "2", features = ["json"] } # 同步 HTTP, 便于 FFI / Android 调用
+rusqlite = { version = "0.32", features = ["bundled"] } # 本地 SQLite
+async-trait = "0.1.92"
+anyhow = "1.0.104"
+tracing = "0.1.44"
+repo = "0.15.5"
+

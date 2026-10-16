@@ -5,6 +5,8 @@
       <sourceFolder url="file://$MODULE_DIR$/client/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/client_auth/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/cola_auth/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/cola_data/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/cola_infra/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/cola_video/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>

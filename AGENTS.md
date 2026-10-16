@@ -45,7 +45,7 @@ use xxx::yyy;
 
 示例：
 ```rust
-// cola_data/src/auth/port/service.rs  -- 数据 - AUTH - port - 会话接口
+// cola_data/src/code/port/service.rs  -- 数据 - AUTH - port - 会话接口
 // 2026/8/1 10:25 Created.
 
 ////////

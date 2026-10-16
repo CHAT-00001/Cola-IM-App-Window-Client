@@ -1,0 +1,16 @@
+pub mod add;
+pub mod buy;
+pub mod category;
+pub mod change;
+pub mod collect;
+pub mod comment;
+pub mod danmaku;
+pub mod feed;
+pub mod home;
+pub mod hotlist;
+pub mod info;
+pub mod like;
+pub mod mine;
+pub mod report;
+pub mod share;
+pub mod view;

@@ -1,0 +1,51 @@
+// cola_data/src/im/entity/score/sticker.rs -- DATA - IM - entity - 资源 - 贴图
+// 2026/3/30 05:33
+
+////////
+
+use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
+use sqlx::FromRow;
+
+////////
+
+/// # [ENTITY] - IM - 资源表情包贴图表
+/// * `pg schema`: `cola.im` -- PG 模式
+/// * `table name`: `score_sticker`  -- 表名
+#[derive(Debug, Clone, Default, Serialize, Deserialize, FromRow)]
+pub struct ImScoreStickerEntity {
+    pub id: i64,                           // ID (自增 / 雪花)
+    pub _id: Option<String>,               // UUID v4
+    pub vx_id: Option<String>,             // UUID v7
+    pub user_id: i64,                      // 用户 ID
+    pub name: Option<String>,              // 名称
+    pub signature: Option<String>,         // 签名
+    pub sticker_url: Option<String>,       // 贴图URL
+    pub media_id: Option<i64>,             // S3 媒体 ID
+    pub label: Option<String>,             // 标签
+    pub language: Option<String>,          // 语言
+    pub perm_id: i16,                      // 权限
+    pub visibility_: i16,                  // 可见范围
+    pub views: i64,                        // 流量数量
+    pub likes: i64,                        // 点赞数量
+    pub favorites: i64,                    // 收藏数量
+    pub use_count: i64,                    // 使用数量
+    pub score: i64,                        // 来源
+    pub coin: i64,                         // 钻石
+    pub status: Option<i16>,               // 状态
+    pub is_deleted: Option<bool>,          // 逻辑删除
+    pub created_at: Option<DateTime<Utc>>, // 创建时间
+    pub updated_at: Option<DateTime<Utc>>, // 更新时间
+    pub deleted_at: Option<DateTime<Utc>>, // 删除时间
+}
+
+////////
+
+/// # [COLUMNS] - 数据表原始字段（对应 Entity 的基础字段，1:1 完全一致）
+pub const IM_SCORE_STICKER_COLUMNS: &str = r#"
+    id, _id, vx_id, user_id, name, signature, sticker_url, media_id, label, language,
+    perm_id, visibility_, views, likes, favorites, use_count, score, coin, status, is_deleted,
+    created_at, updated_at, deleted_at
+"#;
+
+//////// END

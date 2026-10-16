@@ -1,3 +1,8 @@
+// client/upload.rs -- S3 上载器
+// 2026-10-15 22:40
+
+////////
+
 //! 预留的 S3 异步上传能力。
 //!
 //! 现在附件（照片 / 视频 / 文件）只保存在内存里，气泡直接用本地路径渲染缩略图；
@@ -76,7 +81,7 @@ impl UploadRequest {
     }
 }
 
-/// 预留的 S3 上传接口。
+/// # [PORT] - 预留的 S3 上传接口。
 ///
 /// `Send + Sync` 是为了能放进 `Arc` 里跨线程/跨 await 点持有；
 /// 返回 `BoxFuture` 是为了保持 trait object 安全（`async fn` 在 trait 里不行）。
@@ -98,7 +103,15 @@ impl StubUploader {
     }
 }
 
+////////
+
+/// # [UPLOADER]  - 文件上载器
 impl S3Uploader for StubUploader {
+    //
+
+    ////////
+
+    // # [ACTION] - 上载
     fn upload(&self, request: UploadRequest) -> BoxFuture<'static, Result<String, String>> {
         Box::pin(async move {
             Err(format!(
@@ -109,6 +122,8 @@ impl S3Uploader for StubUploader {
     }
 }
 
+////////
+
 /// 对象键：`im/<纳秒时间戳>-<文件名>`。
 pub fn object_key(path: &Path) -> String {
     let stamp = std::time::SystemTime::now()
@@ -117,6 +132,8 @@ pub fn object_key(path: &Path) -> String {
         .unwrap_or_default();
     format!("im/{stamp}-{}", file_name(path))
 }
+
+////////
 
 /// 按扩展名给出 Content-Type；未知扩展名回退到 `application/octet-stream`。
 pub fn content_type_for(path: &Path) -> String {
@@ -143,15 +160,24 @@ pub fn content_type_for(path: &Path) -> String {
     mime.to_string()
 }
 
+////////
+
+/// # [BUILD] - 文件名称
 fn file_name(path: &Path) -> String {
     path.file_name()
         .map(|name| name.to_string_lossy().replace(['/', '\\'], "_"))
         .unwrap_or_else(|| "attachment".to_string())
 }
 
+
+//////// TEST
+
+//
 #[cfg(test)]
 mod tests {
-    use super::{StubUploader, S3Uploader, UploadRequest, UploadState, content_type_for, object_key};
+    use super::{
+        S3Uploader, StubUploader, UploadRequest, UploadState, content_type_for, object_key,
+    };
     use std::path::PathBuf;
 
     #[test]
@@ -177,7 +203,10 @@ mod tests {
 
     #[test]
     fn content_types_follow_the_extension() {
-        assert_eq!(content_type_for(&PathBuf::from("a/b/PHOTO.PNG")), "image/png");
+        assert_eq!(
+            content_type_for(&PathBuf::from("a/b/PHOTO.PNG")),
+            "image/png"
+        );
         assert_eq!(content_type_for(&PathBuf::from("clip.mp4")), "video/mp4");
         assert_eq!(
             content_type_for(&PathBuf::from("no-extension")),
@@ -201,3 +230,5 @@ mod tests {
         assert!(result.is_err());
     }
 }
+
+//////// END
