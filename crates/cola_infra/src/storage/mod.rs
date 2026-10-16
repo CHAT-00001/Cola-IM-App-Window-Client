@@ -4,6 +4,8 @@
 ////////
 
 pub mod sqlite; // SQLite 仓储 (验证码等)
+pub(crate) mod entity; // 数据库实体 (仅 crate 内可见)
+pub(crate) mod migration; // 版本化迁移
 
 use std::collections::HashMap;
 

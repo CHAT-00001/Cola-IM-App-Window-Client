@@ -8,11 +8,13 @@ use std::path::Path;
 use rusqlite::{Connection, params};
 
 use crate::error::{Result, SdkError};
+use crate::storage::entity::captcha::{CAPTCHA_COLUMNS, CaptchaEntity};
+use crate::storage::migration::migrate;
 
 ////////
 
 /// # [REPOSITORY] - SQLite 仓储
-/// * `desc`: `管理本地 SQLite 连接并初始化表结构`
+/// * `desc`: `管理本地 SQLite 连接, 启动时执行版本化迁移`
 pub struct SqliteStore {
     conn: Connection, // SQLite 连接
 }
@@ -26,29 +28,16 @@ impl SqliteStore {
     }
 
     /// # 2. [REPOSITORY] - 打开文件数据库
-    /// * `desc`: `打开或创建本地 SQLite 文件并初始化表结构`
+    /// * `desc`: `打开或创建本地 SQLite 文件, 并执行未完成的迁移`
     pub fn open(path: &Path) -> Result<Self> {
         let conn = Connection::open(path).map_err(storage_err)?;
         Self::init(conn)
     }
 
-    /// # 3. [REPOSITORY] - 初始化表结构
-    /// * `desc`: `创建验证码记录表, 按 application_id 隔离`
-    fn init(conn: Connection) -> Result<Self> {
-        conn.execute_batch(
-            "CREATE TABLE IF NOT EXISTS captcha_record (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                application_id TEXT NOT NULL,
-                area TEXT NOT NULL,
-                phone_no TEXT NOT NULL,
-                http_status INTEGER NOT NULL,
-                response_json TEXT NOT NULL,
-                created_at INTEGER NOT NULL DEFAULT (strftime('%s','now'))
-            );
-            CREATE INDEX IF NOT EXISTS idx_captcha_app
-                ON captcha_record (application_id, area, phone_no);",
-        )
-        .map_err(storage_err)?;
+    /// # 3. [REPOSITORY] - 初始化连接
+    /// * `desc`: `执行版本化迁移后返回仓储实例`
+    fn init(mut conn: Connection) -> Result<Self> {
+        migrate(&mut conn)?;
         Ok(Self { conn })
     }
 
@@ -72,8 +61,32 @@ impl SqliteStore {
         Ok(self.conn.last_insert_rowid())
     }
 
-    /// # 5. [REPOSITORY] - 查询最近一次验证码响应
-    /// * `desc`: `按应用与手机号读取最新一条验证码响应 JSON`
+    /// # 5. [REPOSITORY] - 查询最近一次验证码记录
+    /// * `desc`: `按应用与手机号读取最新一条验证码实体`
+    /// * `condition`: `无记录时返回 None`
+    pub(crate) fn latest_captcha(
+        &self,
+        application_id: &str, // 应用 ID
+        area: &str,           // 区号
+        phone_no: &str,       // 手机号
+    ) -> Result<Option<CaptchaEntity>> {
+        let sql = format!(
+            "SELECT {CAPTCHA_COLUMNS} FROM captcha_record
+             WHERE application_id = ?1 AND area = ?2 AND phone_no = ?3
+             ORDER BY id DESC LIMIT 1"
+        );
+        let mut stmt = self.conn.prepare(&sql).map_err(storage_err)?;
+        let mut rows = stmt
+            .query(params![application_id, area, phone_no])
+            .map_err(storage_err)?;
+        match rows.next().map_err(storage_err)? {
+            Some(row) => Ok(Some(CaptchaEntity::from_row(row).map_err(storage_err)?)),
+            None => Ok(None),
+        }
+    }
+
+    /// # 6. [REPOSITORY] - 查询最近一次验证码原始 JSON
+    /// * `desc`: `对外门面: 返回最新一条验证码的原始 JSON 文本`
     /// * `condition`: `无记录时返回 None`
     pub fn latest_captcha_response(
         &self,
@@ -81,21 +94,9 @@ impl SqliteStore {
         area: &str,           // 区号
         phone_no: &str,       // 手机号
     ) -> Result<Option<String>> {
-        let mut stmt = self
-            .conn
-            .prepare(
-                "SELECT response_json FROM captcha_record
-                 WHERE application_id = ?1 AND area = ?2 AND phone_no = ?3
-                 ORDER BY id DESC LIMIT 1",
-            )
-            .map_err(storage_err)?;
-        let mut rows = stmt
-            .query(params![application_id, area, phone_no])
-            .map_err(storage_err)?;
-        match rows.next().map_err(storage_err)? {
-            Some(row) => Ok(Some(row.get(0).map_err(storage_err)?)),
-            None => Ok(None),
-        }
+        Ok(self
+            .latest_captcha(application_id, area, phone_no)?
+            .map(|entity| entity.response_json))
     }
 }
 
